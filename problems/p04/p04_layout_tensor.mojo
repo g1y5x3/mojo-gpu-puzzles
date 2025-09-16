@@ -1,4 +1,4 @@
-from gpu import thread_idx, block_dim, block_idx
+from gpu.id import thread_idx, block_dim, block_idx
 from gpu.host import DeviceContext
 from layout import Layout, LayoutTensor
 from testing import assert_equal
@@ -18,7 +18,8 @@ fn add_10_2d(
 ):
     row = thread_idx.y
     col = thread_idx.x
-    # FILL ME IN (roughly 2 lines)
+    if row < size and col < size:
+        output[row, col] = a[row, col] + 10.0
 
 
 # ANCHOR_END: add_10_2d_layout_tensor

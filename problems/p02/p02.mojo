@@ -1,5 +1,5 @@
 from memory import UnsafePointer
-from gpu import thread_idx, block_dim, block_idx
+from gpu.id import thread_idx, block_dim, block_idx
 from gpu.host import DeviceContext
 from testing import assert_equal
 
@@ -16,7 +16,7 @@ fn add(
     b: UnsafePointer[Scalar[dtype]],
 ):
     i = thread_idx.x
-    # FILL ME IN (roughly 1 line)
+    output[i] = a[i] + b[i]
 
 
 # ANCHOR_END: add
