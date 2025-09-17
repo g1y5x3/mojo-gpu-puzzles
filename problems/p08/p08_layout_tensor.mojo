@@ -2,7 +2,7 @@ from memory import UnsafePointer
 from gpu import thread_idx, block_idx, block_dim, barrier
 from gpu.host import DeviceContext
 from layout import Layout, LayoutTensor
-from layout.tensor_builder import LayoutTensorBuild as tb
+from layout.tensor_builder import LayoutTensorBuild
 from testing import assert_equal
 
 # ANCHOR: add_10_shared_layout_tensor
@@ -22,7 +22,7 @@ fn add_10_shared_layout_tensor[
     size: Int,
 ):
     # Allocate shared memory using tensor builder
-    shared = tb[dtype]().row_major[TPB]().shared().alloc()
+    shared = LayoutTensorBuild[dtype]().row_major[TPB]().shared().alloc()
 
     global_i = block_dim.x * block_idx.x + thread_idx.x
     local_i = thread_idx.x
@@ -32,7 +32,8 @@ fn add_10_shared_layout_tensor[
 
     barrier()
 
-    # FILL ME IN (roughly 2 lines)
+    if global_i < size:
+        output[global_i] = shared[local_i] + 10
 
 
 # ANCHOR_END: add_10_shared_layout_tensor

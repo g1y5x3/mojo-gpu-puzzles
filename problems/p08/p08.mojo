@@ -2,7 +2,6 @@ from memory import UnsafePointer, stack_allocation
 from gpu import thread_idx, block_idx, block_dim, barrier
 from gpu.host import DeviceContext
 from gpu.memory import AddressSpace
-from sys import size_of
 from testing import assert_equal
 
 # ANCHOR: add_10_shared
@@ -33,7 +32,8 @@ fn add_10_shared(
     # works within a thread block
     barrier()
 
-    # FILL ME IN (roughly 2 lines)
+    if global_i < size:
+        output[global_i] = shared[local_i] + 10
 
 
 # ANCHOR_END: add_10_shared

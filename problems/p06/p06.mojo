@@ -1,5 +1,5 @@
 from memory import UnsafePointer
-from gpu import thread_idx, block_idx, block_dim
+from gpu.id import thread_idx, block_idx, block_dim
 from gpu.host import DeviceContext
 from testing import assert_equal
 
@@ -16,8 +16,8 @@ fn add_10_blocks(
     size: Int,
 ):
     i = block_dim.x * block_idx.x + thread_idx.x
-    # FILL ME IN (roughly 2 lines)
-
+    if i < size:
+        output[i] = a[i] + 10.0
 
 # ANCHOR_END: add_10_blocks
 
